@@ -17,6 +17,7 @@ module.exports = {
   ** Add axios globally
   */
   plugins: ['~/plugins/vuetify'],
+  modules: ['@nuxtjs/dotenv'],
   build: {
     vendor: ['axios', 'vuetify'],
     /*
