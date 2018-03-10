@@ -6,7 +6,7 @@
           TADA
         </h1>
       </v-flex>
-      <v-flex xs6 offset-xs3>
+      <v-flex xs12 md6 offset-md3>
         <v-card>
           <v-card-title>
             <v-form v-on:submit="sendMail">
