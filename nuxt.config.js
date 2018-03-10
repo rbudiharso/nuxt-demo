@@ -13,13 +13,13 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Add axios globally
-  */
-  plugins: ['~/plugins/vuetify'],
+  plugins: [
+    '~/plugins/vuetify',
+    { src: '~/plugins/vuelidate', ssr: false }
+  ],
   modules: ['@nuxtjs/dotenv'],
   build: {
-    vendor: ['axios', 'vuetify'],
+    vendor: ['axios', 'vuetify', 'vuelidate'],
     /*
     ** Run ESLINT on save
     */
