@@ -12,12 +12,12 @@ const transporter = nodemailer.createTransport({
   })
 })
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
   const { name, phone, email, address } = req.body
   transporter.sendMail({
     from: 'noreply@giftcard.co.id',
     to: 'partners@usetada.com',
-    subject: 'New Partner Submission',
+    subject: `New Partner Submission - ${name}`,
     text: `
       Name: ${name}
       Phone: ${phone}

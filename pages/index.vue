@@ -1,19 +1,21 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
-      <v-flex xs12 md6 offset-md3>
-        <v-alert
-          type="success"
-          dismissible
-          v-model="alert"
-          transition="scale-transition">
-          Thank you for being our partner
-        </v-alert>
-      </v-flex>
       <v-flex xs12>
         <h1 class="logo blue--text text--darken-4">
           TADA
         </h1>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap>
+      <v-flex xs12 md6 offset-md3>
+        <v-snackbar
+          color="success"
+          top="true"
+          v-model="alert"
+        >
+          <span text-xs-center>Thank you for being our partner</span>  
+        </v-snackbar>
       </v-flex>
       <v-flex xs12 md6 offset-md3>
         <v-card>
@@ -47,6 +49,12 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <br />
+        <span class="text-center grey--text text-lighten-1">Copyright &copy; TADA 2018</span>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -74,18 +82,17 @@ export default {
   },
   methods: {
     sendMail: function () {
-      const { name, email, phone, company } = this.partner
-      axios.post('/api/mailer', {
-        name, email, phone, company
-      })
+      this.alert = true
+      axios
+        .post('/api/mailer', this.partner)
         .then(() => {
           this.partner = Object.assign({}, empty)
-          this.alert = true
-          // window.location.href = '/'
+          const a = setTimeout(() => {
+            this.alert = false
+            clearTimeout(a)
+          }, 3000)
         })
-        .catch(e => {
-          alert(e)
-        })
+        .catch(alert)
     }
   }
 }

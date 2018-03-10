@@ -143,7 +143,6 @@ module.exports = require("body-parser");
 
 
 
-
 var router = Object(__WEBPACK_IMPORTED_MODULE_0_express__["Router"])();
 
 router.use('/mailer', __WEBPACK_IMPORTED_MODULE_1__mailer__["a" /* default */]);
@@ -185,7 +184,7 @@ router.post('/', function (req, res, next) {
   transporter.sendMail({
     from: 'noreply@giftcard.co.id',
     to: 'partners@usetada.com',
-    subject: 'New Partner Submission',
+    subject: 'New Partner Submission - ' + name,
     text: '\n      Name: ' + name + '\n      Phone: ' + phone + '\n      Email: ' + email + '\n      Address: ' + address + '\n    '
   }, function (err, info) {
     console.error(err);
