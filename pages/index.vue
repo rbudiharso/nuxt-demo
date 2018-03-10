@@ -1,6 +1,15 @@
 <template>
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
+      <v-flex xs12 md6 offset-md3>
+        <v-alert
+          type="success"
+          dismissible
+          v-model="alert"
+          transition="scale-transition">
+          Thank you for being our partner
+        </v-alert>
+      </v-flex>
       <v-flex xs12>
         <h1 class="logo blue--text text--darken-4">
           TADA
@@ -9,7 +18,7 @@
       <v-flex xs12 md6 offset-md3>
         <v-card>
           <v-card-title>
-            <v-form v-on:submit="sendMail">
+            <v-form v-on:submit.prevent="sendMail">
               <v-text-field
                 label="Name"
                 v-model="partner.name"
@@ -28,8 +37,8 @@
                 required
                 ></v-text-field>
               <v-text-field
-                label="Address"
-                v-model="partner.address"
+                label="Company"
+                v-model="partner.company"
                 required
                 ></v-text-field>
               <v-btn type="submit" color="info">Submit</v-btn>
@@ -44,15 +53,18 @@
 <script>
 import axios from '~/plugins/axios'
 
+const empty = {
+  name: '',
+  phone: '',
+  email: '',
+  company: ''
+}
+
 export default {
   async asyncData () {
     return {
-      partner: {
-        name: '',
-        phone: '',
-        email: '',
-        address: ''
-      }
+      partner: Object.assign({}, empty),
+      alert: false
     }
   },
   head () {
@@ -62,13 +74,14 @@ export default {
   },
   methods: {
     sendMail: function () {
-      const { name, email, phone, address } = this.partner
+      const { name, email, phone, company } = this.partner
       axios.post('/api/mailer', {
-        name, email, phone, address
+        name, email, phone, company
       })
         .then(() => {
-          window.alert('sent')
-          window.location.href = '/'
+          this.partner = Object.assign({}, empty)
+          this.alert = true
+          // window.location.href = '/'
         })
         .catch(e => {
           alert(e)
